@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "b1oRLaWj50SWV62Oc7i9Fto8IlFNqwqugWmw2C+b1iNJGFDUS2DVUE1NQwAocOZO92akzWgvaWthKuf8hkiT4w==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\ayses\\Desktop\\BookAppProject\\BookApp.Entities\\BookApp.Entities.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ayses\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\3.1.0\\microsoft.windowsdesktop.app.ref.3.1.0.nupkg.sha512",
+    "C:\\Users\\ayses\\.nuget\\packages\\microsoft.netcore.app.ref\\3.1.0\\microsoft.netcore.app.ref.3.1.0.nupkg.sha512",
+    "C:\\Users\\ayses\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.10\\microsoft.aspnetcore.app.ref.3.1.10.nupkg.sha512"
+  ],
+  "logs": []
+}

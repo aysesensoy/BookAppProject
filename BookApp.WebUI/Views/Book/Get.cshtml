@@ -1,0 +1,121 @@
+﻿@model BookModel
+
+    <div class="row mt-5">  
+        <div class="col-2">
+            
+                <img src="~/img/book.png" width="160" height="160" >
+        
+        </div>
+        <div class="col-8">
+            <form id="formUpdateBook">
+                <input type="hidden" asp-for="Id" id="bookId" />
+                <div class="form-group row">
+                    <label for="BookName" class="col-sm-5 col-form-label">Kitap Adı:</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" asp-for="BookName">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="Author" class="col-sm-5 col-form-label">Yazar Adı:</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" asp-for="Author">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="ReleaseDate" class="col-sm-5 col-form-label">Yayınlanma Tarihi:</label>
+                    <div class="col-sm-7">
+                        <input type="date" class="form-control" asp-for="ReleaseDate">
+                    </div>
+                </div>
+            </form>
+
+            <div class="row mt-3">
+                <div class="col-3">
+                    <a href="/Book/Index" class="btn btn-info"><i class="fa fa-reply"></i>  Geri Dön </a>
+                </div>
+                <div class="col-3">
+                    <button type="button" id="btnUpdate" class="btn btn-primary "><i class="fa fa-cog"></i>  Güncelle </button>
+                </div>
+                <div class="col-6 row d-flex justify-content-end">
+                    <button type="button" id="btnDelete" class="btn btn-warning "><i class="fa fa-trash"></i>  Sil </button>
+                    <button type="button" id="btnDeleteHard" class="btn btn-danger ml-1"><i class="fa fa-trash-o"></i>  Kalıcı Sil </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section Scripts
+{
+        <script>
+            $(document).ready(function () {
+
+                $("#btnUpdate").click(function () {
+                    $.ajax({
+                        type: "POST",
+                        url: "/Book/Update",
+                        data: $("#formUpdateBook").serialize(),
+                        success: function (data) {
+
+                            if (data == 1) {
+                                alert("Güncelleme işlemi başarılı.");
+                                window.location.href = "/";
+
+                            }
+                            else if (data == -1) {
+                                alert("Kitap Adı ve Yazar Adı alanlarının doldurulması zorunludur.");
+                            }
+                            else {
+                                alert("Hata! Lütfen tekrar deneyiniz.");
+                            }
+                        }
+                    });
+                });
+
+
+                $("#btnDelete").click(function () {
+                    debugger;
+                    var bookId = $("#bookId").val();
+                    debugger;
+                    var result = confirm("Kitabı silmek istediğinizden emin misiniz ?");
+                    if (result == true) {
+                        $.ajax({
+                            type: "GET",
+                            url: `/Book/Delete/${bookId}`,
+                            success: function (data) {
+                                if (data == 1) {
+                                    alert("Silme işlemi başarılı.");
+                                    window.location.href = "/";
+                                }
+                                else {
+                                    alert("Hata! Lütfen tekrar deneyiniz.");
+                                }
+                            }
+                        });
+                    }
+                });
+
+
+                $("#btnDeleteHard").click(function () {
+                    debugger;
+                    var bookId = $("#bookId").val();
+                    debugger;
+                    var result = confirm("Kitabı kalıcı olarak silmek istediğinizden emin misiniz ? Bu işlem geri alınamaz !!!");
+                    if (result == true) {
+                        $.ajax({
+                            type: "GET",
+                            url: `/Book/DeleteHard/${bookId}`,
+                            success: function (data) {
+                                if (data == 1) {
+                                    alert("Kalıcı silme işlemi başarılı.");
+                                    window.location.href = "/";
+                                }
+                                else {
+                                    alert("Hata! Lütfen tekrar deneyiniz.");
+                                }
+                            }
+                        });
+                    }
+                });
+            })
+        </script>
+    }

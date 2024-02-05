@@ -1,0 +1,40 @@
+﻿<div class="modal fade" id="divModalBook" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div style="text-align:center;">
+                    <h3 class="modal-title" id="modalLabel">Yeni Kitap Ekle</h3>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formCreateBook">
+                    <div class="form-group row">
+                        <label for="BookName" class="col-sm-5 col-form-label">Kitap Adı:</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" name="BookName" id="BookName" required placeholder="Kitap adı giriniz">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="Author" class="col-sm-5 col-form-label">Yazar Adı:</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" name="Author" id="Author" placeholder="Yazarın adını giriniz">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="ReleaseDate" class="col-sm-5 col-form-label">Yayınlanma Tarihi:</label>
+                        <div class="col-sm-7">
+                            <input type="date" class="form-control" name="ReleaseDate" id="ReleaseDate" required placeholder="Yazarın adını giriniz">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Vazgeç</button>
+                <input type="button" name="btnSubmit" value="Tamamla" id="btnSubmit" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+</div>

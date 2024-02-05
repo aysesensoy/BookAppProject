@@ -1,0 +1,100 @@
+﻿@model BookPageListModel
+
+<div class="mt-5">
+    <form method="get">
+        <div class="row">
+            <div class="col-6 mt-3">
+                <div class="d-flex flex-row">
+                    <button type="button" id="btnModalForBook" class="btn btn-success "><i class="fa fa-plus-square"></i>  Yeni Ekle</button>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-row d-flex justify-content-end mt-3">
+                    <div class="col-auto">
+                        <label class="sr-only" for="inlineFormInput">Ara</label>
+                        <input type="text" class="form-control mb-2" id="inlineFormInput" name="search" placeholder="Aranacak Kelime" value="@(Model.Search !=null ? Model.Search : "")">
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary mb-2">Filtrele</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <table class="table table-bordered  table-striped table-advance table-hover" style="background-color:rgba(255, 255, 255, 0.5);">
+        <tr>
+            <th>Kitap</th>
+            <th>Yazar Adı</th>
+            <th>Yayınlanma Tarihi</th>
+            <th></th>
+        </tr>
+        @foreach (var book in Model.BookList)
+        {
+            <tr>
+                <td>@book.BookName</td>
+                <td>@book.Author</td>
+                <td>@book.ReleaseDate?.ToString("dd/MM/yyyy")</td>
+                <td id="ButtonDiv">
+                    <a href="/Book/Get/@book.Id" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                    <a id="@book.Id" class="btn btn-danger btn-sm btnDel"><i class="fa fa-trash-o "></i></a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+@await Html.PartialAsync("ModalCreateBook")
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+
+            $('#btnModalForBook').click(function () {
+                $("#divModalBook").modal("show");
+            });
+
+            $("#btnSubmit").click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: "/Book/Create",
+                    data: $("#formCreateBook").serialize(),
+                    success: function (data) {
+
+                        if (data == 1) {
+                            alert("Kaydetme işlemi başarılı.");
+                            $("#divModalBook").modal("hide");
+                            location.reload();
+                        }
+                        else if (data == -1) {
+                            alert("Kitap Adı ve Yazar Adı alanlarının doldurulması zorunludur.");
+                        }
+                        else {
+                            alert("Hata! Lütfen tekrar deneyiniz.");
+                        }
+                    }
+                });
+            });
+
+            $(document).on('click', '#ButtonDiv .btnDel', function () {
+                var btnId = this.id;
+                var result = confirm("Kitabı silmek istediğinizden emin misiniz ?");
+                if (result == true) {
+                    $.ajax({
+                        type: "GET",
+                        url: `/Book/Delete/${btnId}`,
+                        success: function (data) {
+                            if (data == 1) {
+                                alert("Silme işlemi başarılı.");
+                                $(`#${btnId}`).parent().parent().remove();
+                                location.reload();
+                            }
+                            else {
+                                alert("Hata! Lütfen tekrar deneyiniz.");
+                            }
+                        }
+                    });
+                }
+            });
+        })
+    </script>
+}
